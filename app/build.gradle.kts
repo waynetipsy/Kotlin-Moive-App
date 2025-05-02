@@ -2,6 +2,10 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+
+    //kotlin("kapt") version "2.1.20"
+
+    id("kotlin-kapt") apply true
 }
 
 android {
@@ -56,4 +60,24 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Retrofit
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+
+    // Room DB
+    //val room_version = "2.7.1"
+
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.artifactid)
+
+    // Coroutines
+    implementation(libs.androidx.room.ktx)
+
+    //Coil
+    implementation(libs.coil.compose)
+
+    //Viewmodel help store and manage Ui lifecycle and survive changes
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
 }
