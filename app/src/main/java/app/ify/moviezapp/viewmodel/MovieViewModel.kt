@@ -23,17 +23,32 @@ class MovieViewModel(repository: Repository): ViewModel() {
 
     // The Online Movies
     var moviesFromApi by mutableStateOf<List<Movie>>(emptyList())
+     private set
+
+    // The offline Movies
+    var moviesFromRoomDB by mutableStateOf<List<Movie>>(emptyList())
+    private set //only 'MovieViewModel' can change 'moviesFromRoomDB'
 
     // View Model Scope: Launch a coroutine in the scope of viewmodel
     // which means that coroutine will be tied to lifecycle of the viewmodel
     init {
         viewModelScope.launch {
            try {
-         moviesFromApi = repository.getPopularMoviesFromApi("763de4564b2e9e570c3d7f64bf6150fd"
+         moviesFromApi = repository
+             .getPopularMoviesFromApi(
+                 "763de4564b2e9e570c3d7f64bf6150fd"
          )
+               // Insert Movies into RoomDB
+               repository.insertMoviesIntoDB(moviesFromApi)
+
                // Assigning 'movies' to MoveiesFromApi
                movies = moviesFromApi
            } catch (e:Exception){
+
+               //Fetch the data from ROOM DB
+               moviesFromRoomDB = repository.getMoviesFromDB()
+
+               movies = moviesFromRoomDB
 
            }
         }

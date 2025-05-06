@@ -26,5 +26,10 @@ class Repository (context: Context){
     suspend fun insertMoviesIntoDB(movies: List<Movie>){
         return movieDao.insertMoviesList(movies)
     }
+
+    suspend fun insertMovieIntoDB(movie: Movie){
+        return movieDao.insert(movie)
+    }
+
     // Can call cache here
 }
